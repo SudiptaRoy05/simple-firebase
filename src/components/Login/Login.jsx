@@ -1,4 +1,9 @@
-import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup,signOut } from "firebase/auth";
+import {
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
 import auth from "../../Firebase/firebase.init";
 import { useState } from "react";
 
@@ -10,7 +15,7 @@ export default function Login() {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
       .then((result) => {
-        console.log(result.user);
+        // console.log(result.user);
         setUser(result.user);
       })
       .catch((error) => {
@@ -22,7 +27,7 @@ export default function Login() {
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
-        console.log("signOut successFul");
+        // console.log("signOut successFul");
         setUser(null);
       })
       .catch((error) => {
@@ -30,17 +35,17 @@ export default function Login() {
       });
   };
 
-
-  const handleLoginWithGithub =()=>{
+  const handleLoginWithGithub = () => {
     const provider2 = new GithubAuthProvider();
-    signInWithPopup(auth,provider2)
-    .then(result => {
-        console.log(result.user);
-        setUser(result.user)
-    }).catch(error =>{
-        console.log(error)
-    })
-  }
+    signInWithPopup(auth, provider2)
+      .then((result) => {
+        // console.log(result.user);
+        setUser(result.user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div>
       {/* <button
@@ -53,15 +58,24 @@ export default function Login() {
 
       {/* <button onClick={handleSignOut} className="btn btn-info">Sign Out</button> */}
 
-      {/* {user ? (
+      {user ? (
         <button onClick={handleSignOut} className="btn btn-info">
           Sign Out
         </button>
       ) : (
-        <button onClick={handleGoogleSignIn} className="btn btn-success mr-10 text-white">
-          Login with Google
-        </button>
-      )} */}
+        <div>
+          <button
+            onClick={handleGoogleSignIn}
+            className="btn btn-success mr-10 text-white"
+          >
+            Login with Google
+          </button>
+
+          <button onClick={handleLoginWithGithub} className="btn btn-warning">
+            Login with github
+          </button>
+        </div>
+      )}
 
       {user && (
         <div>
@@ -70,21 +84,6 @@ export default function Login() {
           <img src={user.photoURL} alt="" />
         </div>
       )}
-
-
-
-        
-      <button onClick={handleLoginWithGithub} className="btn btn-warning">Login with github</button>
-
-
-    <button onClick={handleSignOut} className="btn btn-success">Signout</button>
-
-
-
-
-
-
-
     </div>
   );
 }
